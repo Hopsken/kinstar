@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KinStar</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #app {
+            height: 70%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 2em 0;
+        }
+
+        #app img {
+            width: 80%;
+            margin-bottom: 2em;
+        }
+
+        #app img:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <div id="app">
+        Yet Another Date Screen for Kindle
+    </div>
+    <script>
+        function parseQuery() {
+            var query = location.search.substring(1).toLowerCase()
+            var vars = query.split('&')
+            return vars
+                .map(pair => pair.split('='))
+                .filter(pair => !!pair[0] && !!pair[1])
+        }
+
+        function getBadgeUrl(name, value) {
+            if (name === 'twitter') {
+                return "https://img.shields.io/twitter/follow/" + value + "?label=Twitter&style=for-the-badge"
+            }
+
+            if (name === 'github') {
+                return "https://img.shields.io/github/followers/" + value + "?label=Github&style=for-the-badge"
+
+            }
+        }
+
+        function createImages(paris) {
+            const fragment = document.createDocumentFragment()
+            const main = document.getElementById('app')
+            main.innerHTML = ""
+
+            pairs.forEach(function (pair) {
+                var img = document.createElement('img')
+                img.src = getBadgeUrl(pair[0], pair[1])
+                img.alt = pair[0]
+                fragment.appendChild(img)
+            })
+            main.appendChild(fragment)
+        }
+
+        const pairs = parseQuery()
+        console.info(pairs)
+        if (pairs.length > 0) {
+            createImages(pairs)
+        }
+    </script>
+</body>
+
+</html>
